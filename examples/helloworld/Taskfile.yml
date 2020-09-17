@@ -1,0 +1,28 @@
+version: '3'
+
+vars:
+  CLIENT_APP: greeter_client
+  SERVER_APP: greeter_server
+  REGISTRY: ""
+  REPOSITORY: aws-samples
+  TAG: latest
+  PROTODIR: helloworld
+
+includes:
+  client:
+    taskfile: ./greeter_client
+    dir: ./greeter_client
+  server:
+    taskfile: ./greeter_server
+    dir: ./greeter_server
+
+tasks:
+  proto:
+    desc: "[Re]Generate go code for protocol buffers."
+    cmds:
+      - protoc -I {{.PROTODIR}} --go_out=paths=source_relative:{{.PROTODIR}} --go-grpc_out=paths=source_relative:{{.PROTODIR}} helloworld.proto
+  build-container:
+    desc: Builds and pushes this example's containers.
+    cmds:
+      - task: client:buildx-container
+      - task: server:buildx-container
