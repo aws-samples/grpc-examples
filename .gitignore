@@ -14,7 +14,7 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
 
 ##### VisualStudioCode #####
 
@@ -31,3 +31,9 @@
 ##### goreleaser #####
 
 dist/
+
+##### Python #####
+__pycache__/
+*.py[cod]
+*$py.class
+ 
